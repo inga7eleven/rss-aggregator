@@ -25,7 +25,7 @@ jobs:
       - name: Run RSS aggregator
         run: python rss_aggregator.py
       
-     - name: Commit and push if feed changed
+      - name: Commit and push if feed changed
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
