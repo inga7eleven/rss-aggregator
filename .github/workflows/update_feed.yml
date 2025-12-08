@@ -25,9 +25,23 @@ jobs:
       - name: Run RSS aggregator
         run: python rss_aggregator.py
       
-      - name: Commit and push if feed changed
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git add combined_feed.xml
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed" && git push)
+     - name: Commit and push if feed changed
+     run: |
+       git config --global user.name 'github-actions[bot]'
+       git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+       git add combined_feed.xml
+       git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed" && git pull --rebase && git push)
+```
+
+5. Click **"Commit changes"**
+
+## Verify Your Feed Was Created
+
+Even though it failed to push, the feed was created! Check:
+
+1. Go to your repository's **Code** tab
+2. Look for `combined_feed.xml` - **it should be there!**
+3. Click on it to view your combined feed
+4. Your feed URL is:
+```
+   https://raw.githubusercontent.com/inga7eleven/rss-aggregator/main/combined_feed.xml
