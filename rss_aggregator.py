@@ -7,7 +7,7 @@ def combine_rss_feeds(feed_urls, output_filename="combined_feed.xml"):
     channel = SubElement(combined_root, "channel")
     
     SubElement(channel, "title").text = "My Combined RSS Feed"
-    SubElement(channel, "link").text = "https://github.com/YOUR_USERNAME/rss-aggregator"
+    SubElement(channel, "link").text = "https://github.com/inga7eleven/rss-aggregator"
     SubElement(channel, "description").text = "An aggregated feed from multiple sources"
     SubElement(channel, "lastBuildDate").text = datetime.now().strftime("%a, %d %b %Y %H:%M:%S GMT")
     
