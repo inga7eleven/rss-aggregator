@@ -2,19 +2,14 @@ name: Update RSS Feed Daily
 
 on:
   schedule:
-    # Runs at 6:00 AM UTC every day
     - cron: '0 6 * * *'
-  
-  # Allows manual triggering from the Actions tab
   workflow_dispatch:
 
 jobs:
   update-feed:
     runs-on: ubuntu-latest
-    
     permissions:
       contents: write
-    
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -25,36 +20,14 @@ jobs:
           python-version: '3.11'
       
       - name: Install dependencies
-        run: |
-          pip install feedparser
+        run: pip install feedparser
       
       - name: Run RSS aggregator
-        run: |
-          python rss_aggregator.py
+        run: python rss_aggregator.py
       
       - name: Commit and push if feed changed
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
           git add combined_feed.xml
-          git diff --quiet && git diff --staged --quiet || (git commit -m "🔄 Update RSS feed - $(date +'%Y-%m-%d %H:%M UTC')" && git push)
-```
-
-4. Click **"Commit changes"** → **"Commit changes"**
-
-### Step 4: Test Your Workflow
-
-1. Go to the **"Actions"** tab in your repository
-2. Click **"Update RSS Feed Daily"** on the left
-3. Click **"Run workflow"** dropdown → **"Run workflow"** button
-4. Wait ~30 seconds, refresh the page
-5. You should see a green checkmark ✅ when it completes
-
-### Step 5: View Your Combined Feed
-
-1. Go back to your repository main page (click the **"Code"** tab)
-2. You should now see `combined_feed.xml` in your file list
-3. Click on it to view
-4. Your public feed URL is:
-```
-   https://raw.githubusercontent.com/YOUR_USERNAME/rss-aggregator/main/combined_feed.xml
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed" && git push)
