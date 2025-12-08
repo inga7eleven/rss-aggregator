@@ -25,10 +25,9 @@ jobs:
       - name: Run RSS aggregator
         run: python rss_aggregator.py
       
-      - name: Commit and push if feed changed
+     - name: Commit and push if feed changed
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git pull --rebase
           git add combined_feed.xml
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed" && git push)
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Update RSS feed" && git pull --rebase && git push)
